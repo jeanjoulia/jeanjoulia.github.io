@@ -1,5 +1,6 @@
 
 var bottle = {bottom: null ,top: null }
+var  screenSize = {x : 0 , y : 0 };
 
 
 var phaseBottle = 0;
@@ -49,7 +50,16 @@ function clickBottle(){
             var rotation = Math.floor(Math.random() * 10)-5;
             var speed = Math.floor(Math.random() * 100);
             var direction = Math.floor(Math.random() * 720)-360;
-            emitParticle( "./asset/bottle/bottlePiece/bottlePiece.png", speed , direction , rotation , 10 , 10 , 50 , document.getElementById('screen').offsetWidth/2 , document.getElementById('screen').offsetHeight/2  )
+            emitParticle( "./asset/bottle/bottlePiece/bottlePiece.png", 
+            speed ,
+            direction ,
+            rotation ,
+            10 ,
+            10 ,
+            50 ,
+            document.getElementById('screen').offsetWidth/2 ,
+            document.getElementById('screen').offsetHeight/2,
+            bottle.top.naturalWidth/3  )
         }
     }
     bottle.bottom.src = imageBottle[bottomB];
@@ -66,6 +76,9 @@ function startGame() {
     document.getElementById('imageMiddle').src = imageBottle[4];
     bottle.top.src = imageBottle[4];
     bottle.top.addEventListener('click', this.clickBottle);
+
+    screenSize.x =  document.getElementById('screen').offsetHeight;
+    screenSize.y =  document.getElementById('screen').offsetWidth;
 }
 
 function shake(imageShake,repetition, interval , angle){
@@ -83,15 +96,16 @@ function shake(imageShake,repetition, interval , angle){
     
 }
 
-function emitParticle(particleSrc , speed , direction, rotation, gravity , life, interval , x , y ){
+function emitParticle(particleSrc , speed , direction, rotation, gravity , life, interval , x , y , width){
     fadeFrame = 5;
+    offsetremove = 200;
     var particle = document.createElement('img'); 
     document.getElementById('screen').appendChild(particle); 
     particle.src = particleSrc;
     particle.style.position = "absolute";
     particle.style.left = x.toString(10) + "px";  
     particle.style.top = y.toString(10) + "px";
-    particle.style.width = "5%";  
+    particle.style.width = width.toString(10)+"px";  
     Xspeed = Math.cos((2*Math.PI*direction)/360)*speed;
     Yspeed = Math.sin((2*Math.PI*direction)/360)*speed;
     console.log({"Xspeed" : Xspeed})
@@ -99,13 +113,18 @@ function emitParticle(particleSrc , speed , direction, rotation, gravity , life,
 
     function moveElement(particle , t , gravity , Xspeed , Yspeed , x , y , rotation, interval , index , opacity){
         setTimeout(() => {
-            console.log({"index": t})
-            console.log(Xspeed*t+x)
-            console.log(1/2*gravity*t*t + Yspeed*t + y)
-            particle.style.opacity = opacity
-            particle.style.left = Xspeed*t+x;
-            particle.style.top = 1/2*gravity*t*t + Yspeed*t + y;
-            particle.style.transform = "rotate("+rotation*t.toString(10)+"deg)";
+            var positionX = 1/2*gravity*t*t + Yspeed*t + y;
+            var positionY = Xspeed*t+x;
+            if(positionX >= (screenSize.x-offsetremove) || positionY >= (screenSize.y-offsetremove)
+                       || positionX <= offsetremove || positionY <= offsetremove){
+                particle.remove();
+            }
+            else{
+                particle.style.opacity = opacity
+                particle.style.left =positionY
+                particle.style.top = positionX
+                particle.style.transform = "rotate("+rotation*t.toString(10)+"deg)";
+            }
         }, interval*index)
     }
 

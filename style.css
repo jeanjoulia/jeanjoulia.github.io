@@ -4,12 +4,14 @@ body {
 
 .fillSpace{
     background-color: beige;
+    overflow: hidden;
 }
 
 .bottleImageContainer{
     position: relative;
     height : 60%;
     width : 20%;
+    min-width: 600px;
     background-color: beige;
     left: 50%;
     transform: translateX(-50%);
