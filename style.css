@@ -1,0 +1,40 @@
+body {
+    background-color: white;
+}
+
+.bottleImageContainer{
+    position: relative;
+    height : 60%;
+    width : 20%;
+    border:1px solid black;
+    background-color: beige;
+}
+
+.bottleImage{
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.topDiv{
+    height: 20%;
+}
+
+.bottomDiv{
+    height: 20%;
+}
+
+.bottleImageTop{
+    position: relative;
+    z-index: 3;
+}
+
+.bottleImageMiddle{
+    position: absolute;
+    z-index: 2;
+}
+
+.bottleImageBottom{
+    position: absolute;
+    z-index: 1;
+}
