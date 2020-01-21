@@ -1,32 +1,57 @@
 
+var bottle = {bottom: null ,top: null }
+
+
 var phaseBottle = 0;
+var imageBottle= ["./asset/bottle/bottle0.png",
+                  "./asset/bottle/bottle1.png",
+                  "./asset/bottle/bottle2.png",
+                  "./asset/bottle/bottle3.png",
+                  "./asset/bottle/bottle4.png"]
 
 function clickBottle(){
-    switch (this.phaseBottle) {
+    var topB = 0
+    var bottomB = 0
+    switch (phaseBottle) {
         case 0:
-            this.phaseBottle = 1
+            phaseBottle = 1
+            topB = 4
+            bottomB = 0
             break;
         case 1:
-            this.phaseBottle = 2
+            phaseBottle = 2
+            topB = 1
+            bottomB = 0
             break;
         case 2:
-            this.phaseBottle = 3
+            phaseBottle = 3
+            topB = 2
+            bottomB = 0
             break;
         case 3:
-            this.phaseBottle = 4
+            phaseBottle = 4
+            topB = 3
+            bottomB = 0
             break;
         case 4:
-            this.phaseBottle = 5
+            phaseBottle = 0
+            topB = 4
+            bottomB = 4
             break;
     }
-    console.log("hello")
+    console.log(this.phaseBottle)
+    bottle.bottom.src = imageBottle[bottomB];
+    bottle.top.src = imageBottle[topB];
 }
 
 function startGame() {
-    document.getElementById('imageBottom').src = './asset/bottle/bottle0.png';
-    document.getElementById('imageMiddle').src = './asset/bottle/bottle4.png';
-    document.getElementById('imageTop').src = './asset/bottle/bottle4.png';
-    document.getElementById('imageTop').addEventListener('click', this.clickBottle);
+    bottle.bottom = document.getElementById('imageBottom');
+    bottle.top = document.getElementById('imageTop');
+
+    bottle.bottom.src = imageBottle[0];
+    document.getElementById('imageMiddle').src = imageBottle[4];
+    bottle.top.src = imageBottle[4];
+    bottle.top.addEventListener('click', this.clickBottle);
 }
 
 
