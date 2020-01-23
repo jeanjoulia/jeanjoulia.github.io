@@ -35,11 +35,6 @@ body {
     z-index: 3;
 }
 
-.bottleImageMiddle{
-    position: absolute;
-    z-index: 2;
-}
-
 .bottleImageBottom{
     position: absolute;
     z-index: 1;
